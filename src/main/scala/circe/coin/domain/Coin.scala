@@ -34,11 +34,12 @@ case class SimpleCoinInfo(
   percentChange7d: Double
 ) extends CoinInfo
 
-case class CoinHistogram(
+case class CoinStats(
   time: Long,
   min: Double,
   max: Double,
-  avg: Double
+  avg: Double,
+  count: Long
 )
 
 case class CoinMarketCapInfo(

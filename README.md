@@ -14,25 +14,25 @@ Response
 ```json
 {
   "data": {
-    "btc": {
+    "bitcoin": {
       "id": "bitcoin",
-      "symbol": "BTC",
       "name": "Bitcoin",
-      "price_in_usd": 9845.123,
-      "price_in_btc": 1,
-      "percent_changed_hour": 0.05,
-      "percent_changed_day": 0.08,
-      "percent_changed_week": 0.10
+      "symbol": "BTC",
+      "price_usd": 8802.66,
+      "price_btc": 1,
+      "percent_change1h": 0,
+      "percent_change24h": 0,
+      "percent_change7d": 0
     },
-    "eth": {
+    "ethereum": {
       "id": "ethereum",
       "name": "Ethereum",
       "symbol": "ETH",
-      "price_in_usd": 876.1844,
-      "price_in_btc": 0.021262,
-      "percent_changed_hour": -0.58,
-      "percent_changed_day": 6.34,
-      "percent_changed_week": 8.59
+      "price_usd": 678.441,
+      "price_btc": 0.0773789,
+      "percent_change1h": 0,
+      "percent_change24h": 0,
+      "percent_change7d": 0
     }
   },
   "code": 1,
@@ -51,10 +51,32 @@ Response
 {
   "data": [
     {
-      "time": 1520497939878,
-      "min": 123.123,
-      "max": 432.234,
-      "avg": 123.234
+      "time": 1520587800000,
+      "min": 8630.36,
+      "max": 8630.36,
+      "avg": 8630.36,
+      "count": 1
+    },
+    {
+      "time": 1520589600000,
+      "min": 8624.61,
+      "max": 8741,
+      "avg": 8668.325,
+      "count": 4
+    },
+    {
+      "time": 1520591400000,
+      "min": 8612,
+      "max": 8762.1,
+      "avg": 8668.325,
+      "count": 10
+    },
+    {
+      "time": 1520593200000,
+      "min": 8833.72,
+      "max": 8837.55,
+      "avg": 8835.634999999998,
+      "count": 2
     }
   ],
   "code": 1,

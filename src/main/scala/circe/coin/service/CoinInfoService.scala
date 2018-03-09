@@ -2,7 +2,7 @@ package circe.coin.service
 
 
 import circe.coin.domain.CoinTypeDef.CoinSymbol
-import circe.coin.domain.{CoinHistogram, CoinInfo}
+import circe.coin.domain.{CoinStats, CoinInfo}
 import circe.coin.repository.CoinInfoRepository
 import com.google.inject.Inject
 import com.twitter.util.Future
@@ -14,7 +14,7 @@ trait CoinInfoService {
 
   def mget(coinIds: Array[String]): Future[Map[String, CoinInfo]]
 
-  def coinHistogram(symbol: CoinSymbol, metric: String, from: Long, to: Long, interval: Long): Future[Seq[CoinHistogram]]
+  def coinHistogram(symbol: CoinSymbol, metric: String, from: Long, to: Long, interval: Long): Future[Seq[CoinStats]]
 }
 
 case class ESCoinInfoService @Inject()(coinInfoRepository: CoinInfoRepository) extends CoinInfoService {
