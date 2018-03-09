@@ -12,6 +12,8 @@ trait CCPResponse {
   val data: Option[Any]
 }
 
+case class StandardResponse(code: Int, msg: String, data: Option[Any] = None) extends CCPResponse
+
 case class SuccessCCPResponse(data: Option[Any] = None) extends CCPResponse {
   override val code: Int = 1
   override val msg: String = "OK"

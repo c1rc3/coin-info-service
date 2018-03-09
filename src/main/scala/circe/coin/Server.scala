@@ -2,8 +2,10 @@ package circe.coin
 
 
 import circe.coin.controller.http.CoinController
+import circe.coin.controller.http.exception.CommonExceptionMapper
 import circe.coin.module.CoinInfoModule
 import circe.coin.util.ZConfig
+import circe.coin.worker.CoinMarketCapCrawler
 import com.twitter.finatra.http.HttpServer
 import com.twitter.finatra.http.filters.CommonFilters
 import com.twitter.finatra.http.routing.HttpRouter
@@ -23,11 +25,14 @@ class Server extends HttpServer {
 
   override protected def configureHttp(router: HttpRouter): Unit = {
     router.filter[CommonFilters]
+      .exceptionMapper[CommonExceptionMapper]
       .add[CoinController]
   }
 
   override def afterPostWarmup(): Unit = {
     super.afterPostWarmup()
     println("=====> Ready")
+    // trigger start crawler
+    injector.instance[CoinMarketCapCrawler]
   }
 }

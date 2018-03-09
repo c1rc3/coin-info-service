@@ -5,6 +5,7 @@ import java.net.InetAddress
 import com.twitter.util.{Future, Promise}
 import ESClient._
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingResponse
+import org.elasticsearch.action.bulk.BulkResponse
 import org.elasticsearch.action.delete.DeleteResponse
 import org.elasticsearch.action.get.{GetResponse, MultiGetResponse}
 import org.elasticsearch.action.index.IndexResponse
@@ -120,6 +121,16 @@ case class AsyncESClient(servers: List[String], cluster: String, transportSniff:
 
   def upsert(`type`: String, id: String, doc: String): Future[UpdateResponse] = {
     client.prepareUpdate(indexName, `type`, id).setDoc(doc).setUpsert(doc).execAsync
+  }
+
+  def mupsert(`type`: String, data: Array[(String, String)]): Future[BulkResponse] = {
+    val bulk = client.prepareBulk()
+    data.foreach(f => {
+      val id = f._1
+      val doc = f._2
+      bulk.add(client.prepareUpdate(indexName, `type`, id).setDoc(doc).setUpsert(doc))
+    })
+    bulk.execAsync
   }
 
   def prepareSearch = client.prepareSearch(indexName)
