@@ -3,7 +3,7 @@ package circe.coin.util
 import com.twitter.util.NonFatal
 
 /**
- * Created by plt on 12/27/17.
+ * Created by phg on 12/27/17.
  **/
 trait Cronning extends XLogging {
   var threads = Seq[Thread]()

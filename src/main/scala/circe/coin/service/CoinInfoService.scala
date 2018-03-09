@@ -1,9 +1,9 @@
 package circe.coin.service
 
 
-import circe.coin.domain.{CoinHistogram, CoinInfo, SimpleCoinInfo}
 import circe.coin.domain.CoinTypeDef.CoinSymbol
-import circe.coin.repository.AsyncESClient
+import circe.coin.domain.{CoinHistogram, CoinInfo}
+import circe.coin.repository.CoinInfoRepository
 import com.google.inject.Inject
 import com.twitter.util.Future
 
@@ -12,35 +12,17 @@ import com.twitter.util.Future
  **/
 trait CoinInfoService {
 
-  def getCoinBySymbols(symbols: Array[CoinSymbol]): Future[Map[CoinSymbol, CoinInfo]]
+  def mget(coinIds: Array[String]): Future[Map[String, CoinInfo]]
 
-  def getCoinPriceDateHistogram(symbol: String, from: Long, to: Long, interval: Long): Future[Seq[CoinHistogram]]
+  def coinHistogram(symbol: CoinSymbol, metric: String, from: Long, to: Long, interval: Long): Future[Seq[CoinHistogram]]
 }
 
+case class ESCoinInfoService @Inject()(coinInfoRepository: CoinInfoRepository) extends CoinInfoService {
 
-case class ESCoinInfoService @Inject()(es: AsyncESClient) extends CoinInfoService {
-
-  override def getCoinBySymbols(symbols: Array[CoinSymbol]) = Future(
-    symbols.map(s => (s, SimpleCoinInfo(
-      id = "bitcoin",
-      symbol = s,
-      name = "Bitcoin",
-      priceInUSD = 9845.123,
-      priceInBTC = 1.00,
-      percentChangedHour = 0.05,
-      percentChangedDay = 0.08,
-      percentChangedWeek = 0.10
-    ))).toMap
+  override def mget(coinIds: Array[String]) = coinInfoRepository.mget(coinIds).map(coinInfos =>
+    coinInfos.map(f => (f.id, f)).toMap
   )
 
-  override def getCoinPriceDateHistogram(symbol: String, from: Long, to: Long, interval: Long) = Future(
-    Seq(
-      CoinHistogram(
-        time = 1520497939878L,
-        min = 123.123,
-        max = 432.234,
-        avg = 123.234
-      )
-    )
-  )
+  override def coinHistogram(symbol: CoinSymbol, metric: String, from: Long, to: Long, interval: Long) =
+    coinInfoRepository.getHistogram(symbol.toUpperCase, metric, from, to, interval)
 }

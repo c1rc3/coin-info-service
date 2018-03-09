@@ -13,13 +13,13 @@ class CoinController @Inject()(coinInfoService: CoinInfoService) extends Control
 
   get("/coins") {
     req: CoinInfoRequest => {
-      coinInfoService.getCoinBySymbols(req.getSymbols).toCCPSuccessResponse
+      coinInfoService.mget(req.getIds).toCCPSuccessResponse
     }
   }
 
   get("/coins/price/date-histogram") {
     req: CoinPriceDateHistogramRequest => {
-      coinInfoService.getCoinPriceDateHistogram(req.symbol, req.fromTime, req.toTime, req.interval).toCCPSuccessResponse
+      coinInfoService.coinHistogram(req.symbol, req.metric, req.fromTime, req.toTime, req.interval).toCCPSuccessResponse
     }
   }
 }
