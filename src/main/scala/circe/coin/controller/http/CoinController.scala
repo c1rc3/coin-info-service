@@ -17,9 +17,9 @@ class CoinController @Inject()(coinInfoService: CoinInfoService) extends Control
     }
   }
 
-  get("/coins/price/date-histogram") {
+  get("/coins/:id/date-histogram") {
     req: CoinPriceDateHistogramRequest => {
-      coinInfoService.coinHistogram(req.symbol, req.metric, req.fromTime, req.toTime, req.interval).toCCPSuccessResponse
+      coinInfoService.coinHistogram(req.id, req.metric, req.fromTime, req.toTime, req.interval).toCCPSuccessResponse
     }
   }
 }

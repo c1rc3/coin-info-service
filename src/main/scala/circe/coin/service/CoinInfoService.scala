@@ -24,5 +24,5 @@ case class ESCoinInfoService @Inject()(coinInfoRepository: CoinInfoRepository) e
   )
 
   override def coinHistogram(symbol: CoinSymbol, metric: String, from: Long, to: Long, interval: Long) =
-    coinInfoRepository.getHistogram(symbol.toUpperCase, metric, from, to, interval)
+    coinInfoRepository.getHistogram(symbol, metric, from, to, interval)
 }
