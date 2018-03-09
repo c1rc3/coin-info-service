@@ -26,7 +26,7 @@ trait CoinInfoRepository {
 
   def mget(ids: Array[String]): Future[Array[CoinInfo]]
 
-  def getHistogram(symbol: String, metric: String, from: Long, to: Long, interval: Long): Future[Seq[CoinStats]]
+  def getHistogram(coinId: String, metric: String, from: Long, to: Long, interval: Long): Future[Seq[CoinStats]]
 }
 
 case class ESCoinInfoRepository @Inject()(es: AsyncESClient, @Named("coin-info-mapping-file") mappingFile: String) extends CoinInfoRepository with Jsoning {
@@ -67,12 +67,12 @@ case class ESCoinInfoRepository @Inject()(es: AsyncESClient, @Named("coin-info-m
     res.getResponses.map(item => item.getResponse.getSourceAsString.asJsonObject[SimpleCoinInfo])
   })
 
-  override def getHistogram(symbol: String, metric: String, from: Long, to: Long, interval: Long) = {
+  override def getHistogram(coinId: String, metric: String, from: Long, to: Long, interval: Long) = {
     es.prepareSearch.setTypes("history")
       .setSize(0)
       .setQuery(
         QueryBuilders.boolQuery()
-          .must(QueryBuilders.termQuery("symbol", symbol))
+          .must(QueryBuilders.termQuery("id", coinId))
           .must(QueryBuilders.rangeQuery("last_update").gte(from).lte(to))
       )
       .addAggregation(

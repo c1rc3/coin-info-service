@@ -43,7 +43,7 @@ Response
 ### Get Coin price histogram
 Request
 ```
-curl -XGET /coins/price/date-histogram?symbol=btc
+curl -XGET /coins/:id/date-histogram
 ```
 
 Response 
@@ -83,3 +83,5 @@ Response
   "msg": "OK"
 }
 ```
+
+

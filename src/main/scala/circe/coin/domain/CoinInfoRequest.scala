@@ -3,7 +3,7 @@ package circe.coin.domain
 import java.util.concurrent.TimeUnit
 
 import circe.coin.domain.CoinTypeDef.CoinSymbol
-import com.twitter.finatra.request.QueryParam
+import com.twitter.finatra.request.{QueryParam, RouteParam}
 
 /**
  * Created by phg on 3/8/18.
@@ -13,7 +13,7 @@ case class CoinInfoRequest(@QueryParam ids: String) {
 }
 
 case class CoinPriceDateHistogramRequest(
-  @QueryParam symbol: String,
+  @RouteParam id: String,
   @QueryParam metric: String = "price_usd",
   @QueryParam fromTime: Long = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(1),  // default 1 days before
   @QueryParam toTime: Long = System.currentTimeMillis(),                                // default current millis
