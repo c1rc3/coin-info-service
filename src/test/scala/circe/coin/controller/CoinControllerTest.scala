@@ -2,7 +2,7 @@ package circe.coin.controller
 
 import circe.coin.Server
 import circe.coin.domain.CoinTypeDef.CoinSymbol
-import circe.coin.domain.{CoinHistogram, CoinInfo, SuccessCCPResponse}
+import circe.coin.domain.{CoinStats, CoinInfo, SuccessCCPResponse}
 import circe.coin.util.JsonUtil._
 import com.twitter.finagle.http.Status
 import com.twitter.finatra.http.EmbeddedHttpServer
@@ -30,7 +30,7 @@ class CoinControllerTest extends FeatureTest {
       assertResult(1)(res.code)
       assert(res.data.nonEmpty)
 
-      val data = res.data.get.asInstanceOf[Seq[CoinHistogram]]
+      val data = res.data.get.asInstanceOf[Seq[CoinStats]]
       data.foreach(h => {
         assert(h.time > 0, "time must > 0")
         assert(h.min > 0, "min must > 0")

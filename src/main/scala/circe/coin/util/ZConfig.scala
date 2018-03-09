@@ -13,6 +13,8 @@ object ZConfig {
   val env = System.getProperty("mode", "development")
   val config = ConfigFactory.load().withFallback(ConfigFactory.parseFile(new File("conf/" + env + ".conf")))
 
+  def getConf(s: String): Config = config.getConfig(s)
+
   def getInt(s: String): Int = config.getInt(s)
 
   def getInt(s: String, default: Int): Int = if (hasPath(s)) getInt(s) else default
