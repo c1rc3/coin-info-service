@@ -1,9 +1,9 @@
-package lbt.util
+package circe.coin.util
 
 import java.util.{Timer, TimerTask}
 
 /**
- * Created by plt on 12/6/17.
+ * Created by phg on 12/6/17.
  **/
 
 trait Running extends XLogging {
