@@ -2,11 +2,11 @@ package circe.coin.controller.http.exception
 
 import javax.inject.Inject
 
-import circe.coin.domain.{CCPResponse, FailureCCPResponse, StandardResponse}
-import circe.coin.util.XLogging
+import circe.coin.domain.StandardResponse
 import com.twitter.finagle.http.{Request, Response}
 import com.twitter.finatra.http.exceptions.ExceptionMapper
 import com.twitter.finatra.http.response.ResponseBuilder
+import circe.coin.util.XLogging
 
 /**
  * Created by plt on 11/16/17.

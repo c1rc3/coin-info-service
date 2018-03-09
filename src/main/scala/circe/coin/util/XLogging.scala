@@ -6,7 +6,7 @@ import com.twitter.inject.Logging
 import scalaj.http.Http
 
 /**
- * Created by plt on 11/16/17.
+ * Created by phg on 11/16/17.
  **/
 trait XLogging extends Logging {
 
