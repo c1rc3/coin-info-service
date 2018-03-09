@@ -3,6 +3,8 @@ package circe.coin.service
 
 import circe.coin.domain.{CoinHistogram, CoinInfo, SimpleCoinInfo}
 import circe.coin.domain.CoinTypeDef.CoinSymbol
+import circe.coin.repository.AsyncESClient
+import com.google.inject.Inject
 import com.twitter.util.Future
 
 /**
@@ -16,7 +18,7 @@ trait CoinInfoService {
 }
 
 
-case class ESCoinInfoService() extends CoinInfoService {
+case class ESCoinInfoService @Inject()(es: AsyncESClient) extends CoinInfoService {
 
   override def getCoinBySymbols(symbols: Array[CoinSymbol]) = Future(
     symbols.map(s => (s, SimpleCoinInfo(
