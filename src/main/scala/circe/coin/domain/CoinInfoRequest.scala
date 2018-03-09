@@ -17,5 +17,5 @@ case class CoinPriceDateHistogramRequest(
   @QueryParam metric: String = "price_usd",
   @QueryParam fromTime: Long = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(1),  // default 1 days before
   @QueryParam toTime: Long = System.currentTimeMillis(),                                // default current millis
-  @QueryParam interval: Long = TimeUnit.MINUTES.toMillis(15)                            // default 15 minutes
+  @QueryParam interval: Long = TimeUnit.MINUTES.toMillis(30)                            // default 15 minutes
 )

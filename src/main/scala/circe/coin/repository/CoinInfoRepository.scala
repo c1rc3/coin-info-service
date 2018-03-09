@@ -2,7 +2,7 @@ package circe.coin.repository
 
 import java.io.File
 
-import circe.coin.domain.{CoinHistogram, CoinInfo, CoinMarketCapInfo, SimpleCoinInfo}
+import circe.coin.domain.{CoinStats, CoinInfo, CoinMarketCapInfo, SimpleCoinInfo}
 import circe.coin.repository.ESClient._
 import circe.coin.util.Jsoning
 import com.google.inject.Inject
@@ -26,7 +26,7 @@ trait CoinInfoRepository {
 
   def mget(ids: Array[String]): Future[Array[CoinInfo]]
 
-  def getHistogram(symbol: String, metric: String, from: Long, to: Long, interval: Long): Future[Seq[CoinHistogram]]
+  def getHistogram(symbol: String, metric: String, from: Long, to: Long, interval: Long): Future[Seq[CoinStats]]
 }
 
 case class ESCoinInfoRepository @Inject()(es: AsyncESClient, @Named("coin-info-mapping-file") mappingFile: String) extends CoinInfoRepository with Jsoning {
@@ -83,7 +83,7 @@ case class ESCoinInfoRepository @Inject()(es: AsyncESClient, @Named("coin-info-m
       .map(res => res.getAggregations.get[Histogram]("dh-timestamp").getBuckets.map(bucket => {
         val time = bucket.getKeyAsString.toLong
         val stats = bucket.getAggregations.get[Stats]("stats")
-        CoinHistogram(time, stats.getMin, stats.getMax, stats.getAvg)
+        CoinStats(time, stats.getMin, stats.getMax, stats.getAvg, stats.getCount)
       }))
   }
 }
