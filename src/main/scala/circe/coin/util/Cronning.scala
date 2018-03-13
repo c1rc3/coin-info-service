@@ -1,11 +1,12 @@
 package circe.coin.util
 
+import com.twitter.inject.Logging
 import com.twitter.util.NonFatal
 
 /**
  * Created by phg on 12/27/17.
  **/
-trait Cronning extends XLogging {
+trait Cronning extends Logging {
   var threads = Seq[Thread]()
   def run(period: Long)(fn: => Unit): Unit = {
     val thread = new Thread(new Runnable() {
@@ -13,7 +14,7 @@ trait Cronning extends XLogging {
         fn
         Thread.sleep(period)
       } catch {
-        case NonFatal(throwable) => exception(throwable, "Cronning.run")
+        case NonFatal(throwable) => error("Cronning.run", throwable)
       }
     })
     thread.start()
