@@ -2,11 +2,13 @@ package circe.coin.util
 
 import java.util.{Timer, TimerTask}
 
+import com.twitter.inject.Logging
+
 /**
  * Created by phg on 12/6/17.
  **/
 
-trait Running extends XLogging {
+trait Running extends Logging {
 
   private val globalTimer = new Timer()
 
@@ -15,7 +17,7 @@ trait Running extends XLogging {
       override def run(): Unit = try {
         func
       } catch {
-        case throwable: Throwable => exception(throwable, "Running.run")
+        case throwable: Throwable => error("Running.run", throwable)
       }
     }, delay, period)
   }
